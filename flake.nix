@@ -14,8 +14,8 @@
     flake-utils.lib.eachDefaultSystem (system:
       let pkgs = nixpkgs.legacyPackages.${system};
       in with pkgs;
-      with xorg; {
-        packages.default = rustPlatform.buildRustPackage {
+      with xorg; rec {
+        packages.wtftw = rustPlatform.buildRustPackage {
           pname = "wtftw";
           version = "0.4.4";
           src = wtftw;
@@ -24,5 +24,7 @@
           buildInputs = [ libXinerama libX11 ];
           libPath = lib.makeLibraryPath [ libXinerama libX11 ];
         };
+
+        packages.default = packages.wtftw;
       });
 }
